@@ -35,6 +35,7 @@ except ValueError as e:
 # Initialize Mediapipe Hands
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
+mp_drawing = mp.solutions.drawing_utils
 
 # Open video files
 cap1 = cv2.VideoCapture('cam0_test.mp4')
@@ -57,7 +58,9 @@ while True:
         for hand_landmarks in results.multi_hand_landmarks:
             for landmark in hand_landmarks.landmark:
                 x, y = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
-                cv2.circle(frame, (x, y), 3, (0, 255, 0), -1)
+                cv2.circle(frame, (x, y), 3, (255, 255, 255), -1)
+            mp_drawing.draw_landmarks(frame,hand_landmarks,mp_hands.HAND_CONNECTIONS)
+            mp_drawing.draw_landmarks(frame,hand_landmarks,mp_hands.HAND_CONNECTIONS)
 
     # Convert frames to RGB for MediaPipe
     rgb_frame0 = cv2.cvtColor(frame0, cv2.COLOR_BGR2RGB)
